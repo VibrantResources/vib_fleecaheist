@@ -1,18 +1,55 @@
 Config = {}
 
 Config.Debug = false -- Setting true will enable visual of target zones
-Config.Cops = 3 -- Amount of cops required to be allowed to hack a vault
+Config.Cops = 4 -- Amount of cops required to be allowed to hack a vault
 Config.PoliceJob = "police" -- Name of police job
 Config.SecurityMaxLevel = 5 -- How many times can a vault security level be upgrade (It starts at 0 per restart)
-Config.DoorOpenDelayInSeconds = 45
-
-----------------
---Items Needed--
-----------------
+Config.DoorOpenDelayInSeconds = 25
 
 Config.SecurityUpgradeItem = "bankssecuritydevice" -- Item needed to upgrade a vaults security level
 Config.HackerItem = "raspberrypi" -- Item needed to hack a vault
-Config.LockerItem = "diamonddrill" -- Item needed to break into lockers
+Config.LockerItem = "diamond_drill" -- Item needed to break into lockers
+
+------------------------
+--Hacking Device Stuff--
+------------------------
+
+Config.HackingDevice = {
+    HackLocations = { -- Locations where players can attempt to add/remove software from their [Config.HackerItem]
+        vector3(-1053.07, -231.04, 43.92),
+    },
+    -- [hackName] needs to match whatever you have listed in the big dumb [banks:client:AttemptToUploadSoftwareToDevice] list of "elseif"s
+    AvailableHackingSoftware = {
+        {
+            hackName = "circle_progress",
+            menuIcon = "fa-solid fa-magnifying-glass", -- Icon displayed in menu (For pretty purposes)
+        },
+        {
+            hackName = "normal_progress",
+            menuIcon = "fa-solid fa-burst",
+        },
+        {
+            hackName = "key_spam",
+            menuIcon = "fa-solid fa-microchip",
+        },
+        {
+            hackName = "key_circle",
+            menuIcon = "fa-solid fa-hands-holding-child",
+        },
+        {
+            hackName = "number_slide",
+            menuIcon = "fa-solid fa-key",
+        },
+        {
+            hackName = "rapid_lines",
+            menuIcon = "fa-solid fa-tachograph-digital",
+        },
+        {
+            hackName = "circle_shake",
+            menuIcon = "fa-solid fa-vault",
+        },
+    },
+}
 
 Config.PoliceMainframe = { -- Location where police can view cameras and acquire the mainframe code, needed to upgrade the vault secuirty (Code changes per restart)
     [1] = {
@@ -46,7 +83,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65), -- Size of locker target zone
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)} -- Rewards for this specific locker
+                    [1] = { item = "money", amount = math.random(3750, 6250)} -- Rewards for this specific locker
                 },
             },
             [2] = {
@@ -54,7 +91,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -62,7 +99,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -70,7 +107,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -78,7 +115,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -86,7 +123,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -94,7 +131,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -102,7 +139,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -110,7 +147,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }
@@ -140,7 +177,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [2] = {
@@ -148,7 +185,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -156,7 +193,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 335.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -164,7 +201,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -172,7 +209,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -180,7 +217,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -188,7 +225,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -196,7 +233,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 335.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -204,7 +241,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 335.0,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }
@@ -234,7 +271,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [2] = {
@@ -242,7 +279,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -250,7 +287,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -258,7 +295,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -266,7 +303,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -274,7 +311,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -282,7 +319,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -290,7 +327,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -298,7 +335,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }
@@ -328,7 +365,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [2] = {
@@ -336,7 +373,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -344,7 +381,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -352,7 +389,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -360,7 +397,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -368,7 +405,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -376,7 +413,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -384,7 +421,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -392,7 +429,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }
@@ -422,7 +459,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [2] = {
@@ -430,7 +467,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -438,7 +475,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -446,7 +483,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -454,7 +491,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -462,7 +499,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -470,7 +507,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -478,7 +515,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -486,7 +523,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }
@@ -516,7 +553,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [2] = {
@@ -524,7 +561,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [3] = {
@@ -532,7 +569,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [4] = {
@@ -540,7 +577,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 250.25,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [5] = {
@@ -548,7 +585,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [6] = {
@@ -556,7 +593,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [7] = {
@@ -564,7 +601,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 159.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [8] = {
@@ -572,7 +609,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
             [9] = {
@@ -580,7 +617,7 @@ Config.Banks = {
                 ["size"] = vec3(0.30, 0.5, 0.65),
                 ["rotation"] = 69.75,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(2250, 3750)}
+                    [1] = { item = "money", amount = math.random(3750, 6250)}
                 }
             },
         }

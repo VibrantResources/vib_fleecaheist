@@ -7,14 +7,15 @@ Fleeca bank heist resource
 - ox_lib
 - ox_inventory
 - ox_target
-- boii_minigames
+- bl_ui
 
-# What does resource provide?
+# What does this resource provide?
 
 - Ability to rob Fleecas lock boxing within the vaults, using a simple hack at a secuirty panel
+- Ability to load hacking software onto [Config.HackerItem] and match it with a vault to begin the hack
 - Armed guard response to provide interaction before player police arrive
-- Secuirty level upgrading of inidividual vaults, providing slower open doors and quicker closing times
-- Camera access from a static location of choosing
+- Security level upgrading of individual vaults, providing slower opening doors and quicker closing times
+- Camera access from a configurable locations
 - Configurable rewards, locations, models and more
 
 # Why isn't there a random reward table for lockboxes?
@@ -27,7 +28,7 @@ Fleeca banks are small banks, with small holdings. The table in the middle would
 
 # Why isn't there any cash trolleys?
 
-It is due to be added but falls way down on the list of things to do
+Fleeca vaults are small and cash trolleys shouldn't be there
 
 # Why aren't you using [marked_bills] for your currency of dirty money?
 
@@ -47,4 +48,4 @@ Both of these are required for the mini game to work - If you'd rather stick wit
 
 # HACKING MINIGAMES REQUIREMENT
 
-https://github.com/boiidevelopment/boii_minigames?tab=GPL-3.0-1-ov-file
+https://github.com/Byte-Labs-Studio/bl_ui
