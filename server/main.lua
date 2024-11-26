@@ -34,7 +34,7 @@ lib.callback.register('banks:server:CheckCopCount', function(source)
     local allPlayers = QBCore.Functions.GetQBPlayers()
 
     for _, player in pairs(allPlayers) do
-        if player.PlayerData.job.type == 'leo' and v.PlayerData.job.onduty then
+        if player.PlayerData.job.type == 'leo' and player.PlayerData.job.onduty then
             copCount = copCount + 1
         end
     end
