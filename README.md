@@ -17,6 +17,7 @@ Fleeca bank heist resource
 - Security level upgrading of individual vaults, providing slower opening doors and quicker closing times
 - Camera access from a configurable locations
 - Configurable rewards, locations, models and more
+- Only 1 bank can be robbed at a time and we achieved this through a callback tro the server, checking whether a bank vault has been hacked and if so, then putting all other banks on cooldown for the duration that THAT banks vault door is open for
 
 # Why is there no middle table loot or cash trolleys like other bank heist resources?
 

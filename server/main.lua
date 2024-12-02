@@ -46,7 +46,7 @@ CreateThread(function()
     for k, v in pairs(Config.Banks) do
         local randomHackKey = math.random(1, #Config.HackingDevice.AvailableHackingSoftware)
         local chosenHack = Config.HackingDevice.AvailableHackingSoftware[randomHackKey]
-        print(json.encode(chosenHack, {indent = true}))
+
         bankSecurity[v.label] = {
             level = 0,
             hasBeenRobbed = false,
