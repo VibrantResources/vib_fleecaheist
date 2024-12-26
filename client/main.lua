@@ -60,6 +60,15 @@ RegisterNetEvent('banks:client:keypad', function(data)
         return
     end
 
+    if next(hackingItems) == nil then
+        lib.notify({
+            title = 'Unable',
+            description = "You don't have the right tool for this",
+            type = 'error'
+        })
+        return
+    end
+
     for k, v in pairs(hackingItems) do
         if v.metadata.attachedSoftware then
             table.insert(hackingDevices, {
@@ -72,7 +81,7 @@ RegisterNetEvent('banks:client:keypad', function(data)
     if hackingDevices[1] == nil then
         lib.notify({
             title = 'Attention',
-            description = 'You lack the tools for this',
+            description = "You don't have the required software installed for this",
             type = 'error',
         })
         return
