@@ -1,5 +1,8 @@
 local bl_ui = exports.bl_ui
 
+-- This list is for hacking into a vault panel AFTER the software is already on the hackeritem
+-- You can change the value in the exports brackets to make the minigame easier or harder
+
 function AttemptHack(data)
     if data.metadata.attachedSoftware == "circle_progress" then
         local success = bl_ui:CircleProgress(math.random(3, 5), math.random(50, 100))

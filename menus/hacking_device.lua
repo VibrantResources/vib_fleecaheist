@@ -4,7 +4,7 @@ RegisterNetEvent('banks:client:OpenHackingMenu', function()
 
     headerMenu[#headerMenu + 1] = {
         title = "View Data",
-        description = "View available software that can be uploaded to your "..exports.ox_inventory:Items(Config.HackerItem).label,
+        description = "View available software that can be uploaded to your "..exports.ox_inventory:Items(Config.ItemRequirements.VaultHack).label,
         event = 'banks:client:ViewAvailableHacks',
         icon = 'fa-solid fa-database',
         iconColor = "yellow",
@@ -12,7 +12,7 @@ RegisterNetEvent('banks:client:OpenHackingMenu', function()
 
     headerMenu[#headerMenu + 1] = {
         title = "Delete",
-        description = "Permanently remove all attached hacking data from your "..exports.ox_inventory:Items(Config.HackerItem).label.." (This is irriversible)",
+        description = "Permanently remove all attached hacking data from your "..exports.ox_inventory:Items(Config.ItemRequirements.VaultHack).label.." (This is irriversible)",
         event = 'banks:client:ViewDevicesWithSoftware',
         icon = 'fa-solid fa-database',
         iconColor = "yellow",
@@ -29,7 +29,7 @@ end)
 
 RegisterNetEvent('banks:client:ViewDevicesWithSoftware', function()
     local player = cache.ped
-    local hackingDevices = exports.ox_inventory:Search('slots', Config.HackerItem)
+    local hackingDevices = exports.ox_inventory:Search('slots', Config.ItemRequirements.VaultHack)
     local deletingSoftware = false
     local headerMenu = {}
 
@@ -66,7 +66,7 @@ RegisterNetEvent('banks:client:ViewAvailableHacks', function()
     for k, v in pairs(Config.HackingDevice.AvailableHackingSoftware) do
         headerMenu[#headerMenu + 1] = {
             title = v.hackName,
-            description = "Attach the "..v.hackName.." software to your "..exports.ox_inventory:Items(Config.HackerItem).label,
+            description = "Attach the "..v.hackName.." software to your "..exports.ox_inventory:Items(Config.ItemRequirements.VaultHack).label,
             event = 'banks:client:ChooseHackingDeviceinput',
             args = v.hackName,
             icon = v.menuIcon,
@@ -86,7 +86,7 @@ end)
 
 RegisterNetEvent('banks:client:ChooseHackingDeviceinput', function(hackName)
     local player = cache.ped
-    local hackingDevices = exports.ox_inventory:Search('slots', Config.HackerItem)
+    local hackingDevices = exports.ox_inventory:Search('slots', Config.ItemRequirements.VaultHack)
     local displayMetadata = nil
     local headerMenu = {}
 

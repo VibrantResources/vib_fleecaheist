@@ -1,14 +1,47 @@
-Config = {}
+Config = Config or {}
 
-Config.Debug = false -- Setting true will enable visual of target zones
-Config.Cops = 4 -- Amount of cops required to be allowed to hack a vault
-Config.PoliceJob = "police" -- Name of police job
-Config.SecurityMaxLevel = 5 -- How many times can a vault security level be upgrade (It starts at 0 per restart)
-Config.DoorOpenDelayInSeconds = 25
+Config.CoreInfo = {
+    Debug = true,
+    UseDrillingMiniGame = true, -- Set to false to use a progresscircle / Set to true to use the required minigame [Described in the README] (When looting lock boxes)
+    Cops = 0,
+}
 
-Config.SecurityUpgradeItem = "bankssecuritydevice" -- Item needed to upgrade a vaults security level
-Config.HackerItem = "raspberrypi" -- Item needed to hack a vault
-Config.LockerItem = "diamond_drill" -- Item needed to break into lockers
+Config.ItemRequirements = {
+    MainframeUpgrade = 'bankssecuritydevice',
+    VaultHack = 'raspberrypi',
+    LockerDrill = 'diamond_drill',
+}
+
+-- All banks start on Security Level 0 and utlise the [DefaultDurationInMinutes] until they are upgraded beyond that
+-- You can add as many levels as you want to this list, just keep following the current format
+Config.Security = {
+    MaximumLevel = 5,
+    DefaultDurationInMinutes = 15,
+    DoorOpenDelayInSeconds = 1,
+    Levels = {
+        [1] = {
+            doorOpenDurationInMinutes = 15,
+        },
+        [2] = {
+            doorOpenDurationInMinutes = 13,
+        },
+        [3] = {
+            doorOpenDurationInMinutes = 11,
+        },
+        [4] = {
+            doorOpenDurationInMinutes = 9,
+        },
+        [5] = {
+            doorOpenDurationInMinutes = 7,
+        },
+        [6] = {
+            doorOpenDurationInMinutes = 5,
+        },
+        [7] = {
+            doorOpenDurationInMinutes = 3,
+        },
+    },
+}
 
 ------------------------
 --Hacking Device Stuff--
@@ -51,39 +84,82 @@ Config.HackingDevice = {
     },
 }
 
-Config.PoliceMainframe = { -- Location where police can view cameras and acquire the mainframe code, needed to upgrade the vault secuirty (Code changes per restart)
-    [1] = {
-        ["coords"] = vector3(440.59, -995.84, 35.09),
+-- A list of locations where Police can view cameras
+Config.PoliceInformation = {
+    PoliceJob = {
+        JobNames = {
+            'police',
+            'sheriff',
+        },
+        JobType = 'leo',
+    },
+    MainFrames = {
+        [1] = {
+            ["coords"] = vector3(440.34, -975.73, 30.68),
+        },
+    },
+    CameraList = {
+        -- Add whatever ones you want here. By default, I've just copied over the default locations from qb-policejob
+        { name = 'Pacific Bank CAM#1', location = vector4(257.44, 210.07, 109.08, 0.0),},
+        { name = 'Pacific Bank CAM#2', location = vector4(232.86, 221.46, 107.83, 0.0),},
+        { name = 'Pacific Bank CAM#3', location = vector4(252.27, 225.52, 103.99, 0.0),},
+        { name = 'Limited Ltd Grove St. CAM#1', location = vector4(-53.1433, -1746.714, 31.546, 0.0),},
+        { name = "Rob's Liqour Prosperity St. CAM#1", location = vector4(-1482.9, -380.463, 42.363, 0.0),},
+        { name = "Rob's Liqour San Andreas Ave. CAM#1", location = vector4(-1224.874, -911.094, 14.401, 0.0),},
+        { name = 'Limited Ltd Ginger St. CAM#1', location = vector4(-718.153, -909.211, 21.49, 0.0),},
+        { name = '24/7 Supermarkt Innocence Blvd. CAM#1', location = vector4(23.885, -1342.441, 31.672, 0.0),},
+        { name = "Rob's Liqour El Rancho Blvd. CAM#1", location = vector4(1133.024, -978.712, 48.515, 0.0),},
+        { name = 'Limited Ltd West Mirror Drive CAM#1', location = vector4(1151.93, -320.389, 71.33, 0.0),},
+        { name = '24/7 Supermarkt Clinton Ave CAM#1', location = vector4(383.402, 328.915, 105.541, 0.0),},
+        { name = 'Limited Ltd Banham Canyon Dr CAM#1', location = vector4(-1832.057, 789.389, 140.436, 0.0),},
+        { name = "Rob's Liqour Great Ocean Hwy CAM#1", location = vector4(-2966.15, 387.067, 17.393, 0.0),},
+        { name = '24/7 Supermarkt Ineseno Road CAM#1', location = vector4(-3046.749, 592.491, 9.808, 0.0),},
+        { name = '24/7 Supermarkt Barbareno Rd. CAM#1', location = vector4(-3246.489, 1010.408, 14.705, 0.0),},
+        { name = '24/7 Supermarkt Route 68 CAM#1', location = vector4(539.773, 2664.904, 44.056, 0.0),},
+        { name = "Rob's Liqour Route 68 CAM#1", location = vector4(1169.855, 2711.493, 40.432, 0.0),},
+        { name = '24/7 Supermarkt Senora Fwy CAM#1', location = vector4(2673.579, 3281.265, 57.541, 0.0),},
+        { name = '24/7 Supermarkt Alhambra Dr. CAM#1', location = vector4(1966.24, 3749.545, 34.143, 0.0),},
+        { name = '24/7 Supermarkt Senora Fwy CAM#2', location = vector4(1729.522, 6419.87, 37.262, 0.0),},
+        { name = 'Fleeca Bank Hawick Ave CAM#1', location = vector4(309.341, -281.439, 55.88, 0.0),},
+        { name = 'Fleeca Bank Legion Square CAM#1', location = vector4(144.871, -1043.044, 31.017, 0.0),},
+        { name = 'Fleeca Bank Hawick Ave CAM#2', location = vector4(-355.7643, -52.506, 50.746, 0.0),},
+        { name = 'Fleeca Bank Del Perro Blvd CAM#1', location = vector4(-1214.226, -335.86, 39.515, 0.0),},
+        { name = 'Fleeca Bank Great Ocean Hwy CAM#1', location = vector4(-2958.885, 478.983, 17.406, 0.0),},
+        { name = 'Paleto Bank CAM#1', location = vector4(-102.939, 6467.668, 33.424, 0.0),},
+        { name = 'Del Vecchio Liquor Paleto Bay', location = vector4(-163.75, 6323.45, 33.424, 0.0),},
+        { name = "Don's Country Store Paleto Bay CAM#1", location = vector4(166.42, 6634.4, 33.69, 0.0),},
+        { name = "Don's Country Store Paleto Bay CAM#2", location = vector4(163.74, 6644.34, 33.69, 0.0),},
+        { name = "Don's Country Store Paleto Bay CAM#3", location = vector4(169.54, 6640.89, 33.69, 0.0),},
+        { name = 'Vangelico Jewelery CAM#1', location = vector4(-627.54, -239.74, 40.33, 0.0),},
+        { name = 'Vangelico Jewelery CAM#2', location = vector4(-627.51, -229.51, 40.24, 0.0),},
+        { name = 'Vangelico Jewelery CAM#3', location = vector4(-620.3, -224.31, 40.23, 0.0),},
+        { name = 'Vangelico Jewelery CAM#4', location = vector4(-622.57, -236.3, 40.31, 0.0),},
     }
 }
 
 Config.Banks = {
     [1] = {
         ["label"] = "Alta Street Fleeca", -- Name of bank (Unique)
-        ["coords"] = vector3(311.52, -284.57, 54.42), -- Location of vault keypad
-        ["security"] = {
-            pedModel = "cs_casey", -- Ped model for armed guard
-            spawnLocation = vector4(309.62, -278.95, 54.16, 64.86), -- Location where armed guard spawn
-            hallwayCoords = vector3(307.56, -281.33, 54.16), -- Location for turning point in peds path to vault when opening door
-            vaultAccessDuration = 1, -- How long the vault stays open for when requested by police (In minutes)
-        },
+        ["vaultpanel"] = vector3(311.52, -284.57, 54.42), -- Location of vault keypad
         ["vaultGuard"] = {
             pedModel = "cs_casey", -- Ped model of ped that unlocks vault for police
             spawnLocation = vector3(309.62, -278.95, 54.16), -- Spawn location of ped model that unlocks vault for police
+            hallwayCoords = vector3(307.56, -281.33, 54.16),
+            vaultAccessDurationInMinutes = 1, -- How long the vault stays open for when requested by police
         },
-        ["object"] = `v_ilev_gb_vauldr`, -- Vault door (Don't change unless using different banks)
+        ["vaultDoorObject"] = `v_ilev_gb_vauldr`, -- Vault door (Don't change unless using different banks)
         ["heading"] = {
             closed = 250.0, -- Heading of door when closed
             open = 160.0 -- Heading of door when open
         },
-        ["camId"] = 21, -- Camera ID of interior of vault
+        ["camId"] = 21, -- Camera ID of interior of vault - The event this triggers is in menus/mainframe.lua, by standard it's designed for qb-policejob
         ["lockers"] = {
             [1] = {
                 ["coords"] = vector3(311.25, -285.75, 54.6), -- Location of locker target zone
                 ["size"] = vec3(0.30, 0.5, 0.65), -- Size of locker target zone
                 ["rotation"] = 339.5,
                 ["rewards"] = {
-                    [1] = { item = "money", amount = math.random(3750, 6250)} -- Rewards for this specific locker
+                    [1] = { item = "money", amount = math.random(3750, 6250)} -- Rewards for this unique locker
                 },
             },
             [2] = {
@@ -154,16 +230,12 @@ Config.Banks = {
     },
     [2] = {
         ["label"] = "Legion Square Fleeca",
-        ["coords"] = vector3(147.19, -1046.19, 29.61),
-        ["security"] = {
-            pedModel = "cs_casey",
-            spawnLocation = vector4(145.0, -1041.13, 29.36, 65.19),
-            hallwayCoords = vector3(143.1, -1043.15, 29.36),
-            vaultAccessDuration = 1,
-        },
+        ["vaultpanel"] = vector3(147.19, -1046.19, 29.61),
         ["vaultGuard"] = {
             pedModel = "cs_casey",
             spawnLocation = vector3(145.0, -1041.13, 29.36),
+            hallwayCoords = vector3(143.1, -1043.15, 29.36),
+            vaultAccessDurationInMinutes = 1,
         },
         ["object"] = `v_ilev_gb_vauldr`,
         ["heading"] = {
@@ -248,16 +320,12 @@ Config.Banks = {
     },
     [3] = {
         ["label"] = "Great Ocean Highway Fleeca",
-        ["coords"] = vector3(-2956.56, 482.09, 15.94),
-        ["security"] = {
-            pedModel = "cs_casey",
-            spawnLocation = vector4(-2960.77, 478.65, 15.69, 177.21),
-            hallwayCoords = vector3(-2958.39, 477.62, 15.69),
-            vaultAccessDuration = 1,
-        },
+        ["vaultpanel"] = vector3(-2956.56, 482.09, 15.94),
         ["vaultGuard"] = {
             pedModel = "cs_casey",
             spawnLocation = vector3(-2960.77, 478.65, 15.69),
+            hallwayCoords = vector3(-2958.39, 477.62, 15.69),
+            vaultAccessDurationInMinutes = 1,
         },
         ["object"] = `hei_prop_heist_sec_door`,
         ["heading"] = {
@@ -342,16 +410,12 @@ Config.Banks = {
     },
     [4] = {
         ["label"] = "Hawick Drive Fleeca",
-        ["coords"] = vector3(-353.56, -55.50, 49.24),
-        ["security"] = {
-            pedModel = "cs_casey",
-            spawnLocation = vector4(-355.58, -50.44, 49.03, 98.7),
-            hallwayCoords = vector3(-357.65, -52.31, 49.03),
-            vaultAccessDuration = 1,
-        },
+        ["vaultpanel"] = vector3(-353.56, -55.50, 49.24),
         ["vaultGuard"] = {
             pedModel = "cs_casey",
             spawnLocation = vector3(-355.58, -50.44, 49.03),
+            hallwayCoords = vector3(-357.65, -52.31, 49.03),
+            vaultAccessDurationInMinutes = 1,
         },
         ["object"] = `v_ilev_gb_vauldr`,
         ["heading"] = {
@@ -436,16 +500,12 @@ Config.Banks = {
     },
     [5] = {
         ["label"] = "Del Perro Fleeca",
-        ["coords"] = vector3(-1210.48, -336.42, 38.01),
-        ["security"] = {
-            pedModel = "cs_casey",
-            spawnLocation = vector4(-1215.46, -334.55, 37.77, 98.7),
-            hallwayCoords = vector3(-1215.26, -337.24, 37.78),
-            vaultAccessDuration = 1,
-        },
+        ["vaultpanel"] = vector3(-1210.48, -336.42, 38.01),
         ["vaultGuard"] = {
             pedModel = "cs_casey",
             spawnLocation = vector3(-1215.46, -334.55, 37.77),
+            hallwayCoords = vector3(-1215.26, -337.24, 37.78),
+            vaultAccessDurationInMinutes = 1,
         },
         ["object"] = `v_ilev_gb_vauldr`,
         ["heading"] = {
@@ -530,16 +590,12 @@ Config.Banks = {
     },
     [6] = {
         ["label"] = "Sandy Fleeca",
-        ["coords"] = vector3(1175.69, 2712.88, 38.33),
-        ["security"] = {
-            pedModel = "cs_casey",
-            spawnLocation = vector4(1179.27, 2708.9, 38.08, 241.55),
-            hallwayCoords = vector3(1180.53, 2711.11, 38.08),
-            vaultAccessDuration = 1,
-        },
+        ["vaultpanel"] = vector3(1175.69, 2712.88, 38.33),
         ["vaultGuard"] = {
             pedModel = "cs_casey",
             spawnLocation = vector3(1179.27, 2708.9, 38.08),
+            hallwayCoords = vector3(1180.53, 2711.11, 38.08),
+            vaultAccessDurationInMinutes = 1,
         },
         ["object"] = `v_ilev_gb_vauldr`,
         ["heading"] = {

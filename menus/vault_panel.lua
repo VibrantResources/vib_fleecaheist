@@ -1,14 +1,15 @@
 RegisterNetEvent('banks:client:PanelMenu', function(data)
-    local playerJob = lib.callback.await('banks:server:GetPlayerJob', false)
-    local headerMenu = {}
+    local player = cache.ped
     local bankIndex = data.args.BankIndex
     local bankInfo = data.args.BankInfo
     local bankSecurity = lib.callback.await('banks:server:GetbankSecurity', false, bankInfo.label)
+    local playerJob = lib.callback.await('banks:server:GetPlayerJob', false)
+    local headerMenu = {}
 
-    if playerJob.name == Config.PoliceJob then
-        if bankSecurity.level >= Config.SecurityMaxLevel then
+    if CheckPlayerJobAndType(playerJob) then
+        if bankSecurity.level >= Config.Security.MaximumLevel then
             headerMenu[#headerMenu + 1] = {
-                title = bankInfo.label,
+                title = "Security Rating",
                 description = "This banks security level can't get any higher, it's already level: "..bankSecurity.level,
                 icon = 'fa-solid fa-shield',
                 iconColor = "white",
@@ -16,8 +17,8 @@ RegisterNetEvent('banks:client:PanelMenu', function(data)
             }
         else
             headerMenu[#headerMenu + 1] = {
-                title = bankInfo.label,
-                description = "This banks security level is currently: "..bankSecurity.level.." \n\nUpgrade it?",
+                title = "Security Rating",
+                description = "This banks security level is currently: "..bankSecurity.level,
                 event = 'banks:client:upgradesecurity',
                 args = {
                     bankInfo = bankInfo,
@@ -28,8 +29,8 @@ RegisterNetEvent('banks:client:PanelMenu', function(data)
         end
 
         headerMenu[#headerMenu + 1] = {
-            title = bankInfo.label,
-            description = "Access Vault",
+            title = "Vault Access",
+            description = "Call a bank guard to provide access to this vault for "..bankInfo.vaultGuard.vaultAccessDurationInMinutes.." minute[s]",
             onSelect = function(args)
                 AccessVault(args)
             end,
@@ -42,8 +43,8 @@ RegisterNetEvent('banks:client:PanelMenu', function(data)
         }
     else
         headerMenu[#headerMenu + 1] = {
-            title = bankInfo.label,
-            description = "Hack security panel",
+            title = "Hack Vault Panel",
+            description = "Hack this banks vault, gaining access to all the possible riches inside",
             event = 'banks:client:keypad',
             args = {
                 bankInfo = bankInfo,

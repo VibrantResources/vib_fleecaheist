@@ -38,12 +38,14 @@ end)
 ---------------------
 
 RegisterNetEvent('banks:client:keypad', function(data)
-    local hackingItems = exports.ox_inventory:Search('slots', Config.HackerItem)
+    local bankLabel = data.bankInfo.label
+    local requiredHackSoftware = data.security.requiredHack
+    local hackingItems = exports.ox_inventory:Search('slots', Config.ItemRequirements.VaultHack)
     local isAnyBankBeingRobbed = lib.callback.await('banks:server:CheckBankRobberyState', false)
     local hackingDevices = {}
 
     if isAnyBankBeingRobbed then
-        local alert = lib.alertDialog({
+        local inProgressAlert = lib.alertDialog({
             header = "ROBBERY IN PROGRESS",
             content = "Another bank is being robbed, this one seems to have gone into lockdown mode!",
             centered = true,
@@ -52,9 +54,9 @@ RegisterNetEvent('banks:client:keypad', function(data)
     end
 
     if data.security.hasBeenRobbed then
-        local alert = lib.alertDialog({
+        local alreadyRobberAlert = lib.alertDialog({
             header = "Previously robbed",
-            content = data.bankInfo.label.." has already been robbed ... greedy little shit",
+            content = bankLabel.." has already been robbed ... greedy little shit",
             centered = true,
         })
         return
@@ -87,20 +89,21 @@ RegisterNetEvent('banks:client:keypad', function(data)
         return
     end
 
-    local input = lib.inputDialog('Hardware', {
+    local hackingInput = lib.inputDialog('Hardware', {
         {
             type = 'select',
+            label = 'Software',
             options = hackingDevices,
             description = 'Choose which device to attach to this vault panel!',
-            icon = 'hashtag',
+            icon = 'fa-solid fa-code',
         },
     })
 
-    if not input or #input < 1 then
+    if not hackingInput or #hackingInput < 1 then
         return
     end
 
-    if input[1].metadata.attachedSoftware ~= data.security.requiredHack then
+    if hackingInput[1].metadata.attachedSoftware ~= requiredHackSoftware then
         lib.notify({
             title = 'Unable',
             description = "That software won't bypass this security panel!",
@@ -110,18 +113,18 @@ RegisterNetEvent('banks:client:keypad', function(data)
     end
 
     local copCount = lib.callback.await('banks:server:CheckCopCount', false)
+    local timeLeft = 0
     
-    if copCount >= Config.Cops then
-        if AttemptHack(input[1]) ~= false then
-            if data.security.level == 0 then timeLeft = 15 end 
-            if data.security.level == 1 then timeLeft = 13 end 
-            if data.security.level == 2 then timeLeft = 11 end 
-            if data.security.level == 3 then timeLeft = 9 end 
-            if data.security.level == 4 then timeLeft = 7 end 
-            if data.security.level == 5 then timeLeft = 6 end
+    if copCount >= Config.CoreInfo.Cops then
+        if AttemptHack(hackingInput[1]) ~= false then
+            if data.security.level == 0 then
+                timeLeft = Config.Security.DefaultDurationInMinutes
+            else
+                timeLeft = Config.Security.Levels[data.security.level].doorOpenDurationInMinutes
+            end
 
             TriggerServerEvent('banks:server:OpenDoor', data, timeLeft)
-            SpawnVaultGuards(data.bankInfo)
+
             exports['ps-dispatch']:FleecaBankRobbery(camId)
         else
             lib.notify({
@@ -139,110 +142,18 @@ RegisterNetEvent('banks:client:keypad', function(data)
     end
 end)
 
-RegisterNetEvent('banks:client:lootbox', function(data)
-    local lootbox = data.args.lootBoxIndex
-    local fullBankInfo = data.args.fullBankInfo
-    local bankInfo = data.args.bankInfo
-    local drillItem = exports.ox_inventory:Search('count', Config.LockerItem)
+function CheckPlayerJobAndType(playerJob)
+    if playerJob.type == Config.PoliceInformation.PoliceJob.JobType then
 
-    if drillItem >= 1 then
-
-        ----------------------------------------
-        --UNCOMMENT THIS TO USE A PROGRESS BAR--
-        ----------------------------------------
-
-        -- lib.requestNamedPtfxAsset("core")
-        -- UseParticleFxAssetNextCall('core')
-        -- local effect = StartParticleFxLoopedAtCoord('ent_ray_finale_vault_sparks', bankInfo.coords.x, bankInfo.coords.y, bankInfo.coords.z, 0, 0, 0, 0x3F800000, 0, 0, 0, 0)
-
-        -- if lib.progressCircle({
-        --     duration = math.random(7500, 15000),
-        --     useWhileDead = false,
-        --     canCancel = true,
-        --     disable = {
-        --         car = true,
-        --         move = true,
-        --         combat = true,
-        --     },
-        --     anim = {
-        --         dict = 'anim@heists@fleeca_bank@drilling',
-        --         clip = 'drill_straight_idle'
-        --     },
-        --     prop = {
-        --         model = `hei_prop_heist_drill`,
-        --         bone = 28422,
-        --         pos = vec3(0.00, 0, -0.01),
-        --         rot = vec3(-220.0, 90.0, -180.0)
-        --     },
-        -- }) then 
-        --     TriggerServerEvent('banks:server:reward', lootbox, bankInfo, fullBankInfo)
-        --     StopParticleFxLooped(effect, 0)
-        -- else
-        --     lib.notify({
-        --         title = 'Canceled',
-        --         description = 'Canceled',
-        --         type = 'error'
-        --     })
-        --     StopParticleFxLooped(effect, 0)
-        -- end
-
-        ------------------------------------------------------------------------
-        --UNCOMMENT THIS TO USE DRILL MINI-GAME, CHECK README FOR REQUIREMENTS--
-        ------------------------------------------------------------------------
-
-        while not HasAnimDictLoaded("anim_heist@hs3f@ig9_vault_drill@drill@") do
-            RequestAnimDict("anim_heist@hs3f@ig9_vault_drill@drill@")
-            Wait(1)
-        end
-        while not HasModelLoaded(GetHashKey('hei_prop_heist_drill')) do
-            RequestModel(GetHashKey('hei_prop_heist_drill'))
-            Wait(1)
-        end
-        while not HasModelLoaded(GetHashKey('hei_p_m_bag_var22_arm_s')) do
-            RequestModel(GetHashKey('hei_p_m_bag_var22_arm_s'))
-            Wait(1)
-        end
-
-        local player = cache.ped
-        local playerCoords = GetEntityCoords(player)
-        local playerRotation = GetEntityRotation(player)
-        local drillObject = CreateObject(GetHashKey('hei_prop_heist_drill'), playerCoords, true, true, true)
-        local bagObject = CreateObject(GetHashKey('hei_p_m_bag_var22_arm_s'), playerCoords, true, true, true)
-        local drillScene = NetworkCreateSynchronisedScene(playerCoords.xy, playerCoords.z+.17, playerRotation, 2, true, false, -1, 0, 1.0)
-
-        NetworkAddPedToSynchronisedScene(player, drillScene, "anim_heist@hs3f@ig9_vault_drill@drill@", "intro", 1.5, -4.0, 1, 16, 1148846080, 0)
-        NetworkAddEntityToSynchronisedScene(drillObject, drillScene, "anim_heist@hs3f@ig9_vault_drill@drill@", "intro_drill_bit", 1.0, 1.0, 1)
-        NetworkAddEntityToSynchronisedScene(bagObject, drillScene, "anim_heist@hs3f@ig9_vault_drill@drill@", "bag_intro", 1.0, 1.0, 1)
-        NetworkAddSynchronisedSceneCamera(drillScene,"anim_heist@hs3f@ig9_vault_drill@drill@",'intro_cam')
-        NetworkStartSynchronisedScene(drillScene)
-        Wait(6000)
-
-        TriggerEvent("Drilling:Start",function(success)
-            if (success) then
-                TriggerServerEvent('banks:server:reward', lootbox, bankInfo, fullBankInfo)
-                NetworkStopSynchronisedScene(drillScene)
-                DeleteObject(drillObject)
-                DeleteObject(bagObject)
-                RemoveAnimDict('anim_heist@hs3f@ig9_vault_drill@drill@')
-                RemovePtfxAsset('core')
-            else
-                lib.notify({
-                    title = 'Failed',
-                    description = "That didn't go so well",
-                    type = 'error'
-                })
-                NetworkStopSynchronisedScene(drillScene)
-                DeleteObject(drillObject)
-                DeleteObject(bagObject)
-                RemoveAnimDict('anim_heist@hs3f@ig9_vault_drill@drill@')
-                RemovePtfxAsset('core')
-            end
-        end, bankInfo.coords)
-    else
-        lib.notify({
-            title = 'Attention',
-            description = "You don't have the right tool for this!",
-            type = 'inform'
-        })
+        return true
     end
-end)
+
+    for k, v in pairs(Config.PoliceInformation.PoliceJob.JobNames) do
+        if v == playerJob.name then
+
+            return true
+        end
+    end
+
+    return false
+end

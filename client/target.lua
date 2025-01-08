@@ -4,11 +4,11 @@ RegisterNetEvent('banks:client:CreateLockerZones', function(data)
             coords = v.coords,
             size = v.size,
             rotation = v.rotation,
-            debug = Config.Debug,
+            debug = Config.CoreInfo.Debug,
             options = {
                 {
                     name = 'banks_locker_'..k,
-                    event = 'banks:client:lootbox',
+                    event = 'banks:client:LootBoxCheck',
                     icon = 'fa-solid fa-lock',
                     iconColour = "red",
                     label = 'Break Open Locker',
@@ -28,9 +28,9 @@ end)
 CreateThread(function()
     for k, v in pairs(Config.Banks) do
         local zone_id = exports.ox_target:addSphereZone({
-            coords = v.coords,
+            coords = v.vaultpanel,
             radius = 0.3,
-            debug = Config.Debug,
+            debug = Config.CoreInfo.Debug,
             options = {
                 {
                     event = "banks:client:PanelMenu",
@@ -50,12 +50,12 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    for k, v in pairs(Config.PoliceMainframe) do
+    for k, v in pairs(Config.PoliceInformation.MainFrames) do
         local zone_id = exports.ox_target:addBoxZone({
             coords = v.coords,
             size = vec3(1.0, 1.0, 1.0),
             rotation = 45,
-            debug = Config.Debug,
+            debug = Config.CoreInfo.Debug,
             options = {
                 {
                     event = 'banks:client:MainframeMenu',
@@ -73,7 +73,7 @@ CreateThread(function()
         exports.ox_target:addSphereZone({
             coords = v,
             radius = 1.0,
-            debug = Config.Debug,
+            debug = Config.CoreInfo.Debug,
             options = {
                 {
                     label = "Access database",

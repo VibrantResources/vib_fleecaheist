@@ -1,23 +1,10 @@
-# vib-banks
-Fleeca bank heist resource
-
-# DEPENDENCIES
-
-- QBCore
-- ox_lib
-- ox_inventory
-- ox_target
-- bl_ui
+# vib_fleecaheist Documentation
+- https://vibrantrp.gitbook.io/vibrant-documentation
 
 # What does this resource provide?
 
-- Ability to hack in & rob preset locations with Fleeca vaults
-- Ability to load hacking software onto [Config.HackerItem] and match it with a vault to begin the hack
-- Armed guard response to provide interaction before player police arrive
-- Security level upgrading of individual vaults, providing slower opening doors and quicker closing times
-- Camera access from a configurable locations
-- Configurable rewards, locations, models and more
-- Only 1 bank can be robbed at a time and we achieved this through a callback tro the server, checking whether a bank vault has been hacked and if so, then putting all other banks on cooldown for the duration that THAT banks vault door is open for
+- Ability to rob Fleeca banks across the map
+- Ability to upgrade bank security levels, lowering vault access duration the higher the level
 
 # Why is there no middle table loot or cash trolleys like other bank heist resources?
 
