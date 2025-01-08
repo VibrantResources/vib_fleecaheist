@@ -1,7 +1,7 @@
 Config = Config or {}
 
 Config.CoreInfo = {
-    Debug = true,
+    Debug = false,
     UseDrillingMiniGame = true, -- Set to false to use a progresscircle / Set to true to use the required minigame [Described in the README] (When looting lock boxes)
     Cops = 0,
 }
