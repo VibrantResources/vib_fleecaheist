@@ -6,7 +6,7 @@ function AccessVault(data)
     local hallwayCoords = data.bankInfo.vaultGuard.hallwayCoords
     local duration = data.bankInfo.vaultGuard.vaultAccessDurationInMinutes
 
-    local guardModel = lib.requestModel(data.bankInfo.security.pedModel, 60000)
+    local guardModel = lib.requestModel(data.bankInfo.vaultGuard.pedModel, 60000)
     local vaultGuardPed = CreatePed(1, guardModel, pedCoords.x, pedCoords.y, pedCoords.z, pedCoords.w, true)
     SetModelAsNoLongerNeeded(guardModel)
 
