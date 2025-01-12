@@ -9,7 +9,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 ------------------
 
 RegisterNetEvent('banks:client:upgradesecurity', function(data)
-    local upgradeItem = exports.ox_inventory:Search('count', Config.SecurityUpgradeItem)
+    local upgradeItem = exports.ox_inventory:Search('count', Config.ItemRequirements.MainFrameUpgrade)
     local mainframeCode = lib.callback.await('banks:server:getmainframecode', source)
     local bankInfo = data.bankInfo.label
 
