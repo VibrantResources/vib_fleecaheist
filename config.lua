@@ -99,7 +99,7 @@ Config.PoliceInformation = {
         },
     },
     CameraList = {
-        -- Add whatever ones you want here. By default, I've just copied over the default locations from qb-policejob
+        -- Add whatever ones you want here. By default, I've just copied over the locations from qb-policejob
         { name = 'Pacific Bank CAM#1', location = vector4(257.44, 210.07, 109.08, 0.0),},
         { name = 'Pacific Bank CAM#2', location = vector4(232.86, 221.46, 107.83, 0.0),},
         { name = 'Pacific Bank CAM#3', location = vector4(252.27, 225.52, 103.99, 0.0),},

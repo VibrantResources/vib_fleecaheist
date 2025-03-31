@@ -16,7 +16,7 @@ RegisterNetEvent('banks:client:LootBoxDrillMiniGame', function(data)
     local bankInfo = data.args.bankInfo
     local drillItem = exports.ox_inventory:Search('count', Config.ItemRequirements.LockerDrill)
 
-    if drillItem <= 1 then
+    if drillItem < 1 then
         lib.notify({
             title = 'Attention',
             description = "You don't have the right tool for this!",

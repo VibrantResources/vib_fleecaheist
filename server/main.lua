@@ -4,7 +4,7 @@ QBCore = exports["qb-core"]:GetCoreObject()
 --Variables--
 -------------
 
-MainframeCode = math.random(1111, 9999) -- You can change this to whatever amount of number you want, to further increase or decrease the length of the code
+MainframeCode = math.random(1111, 9999)
 bankSecurity = {}
 lockerZones = {}
 
@@ -17,7 +17,7 @@ CreateThread(function()
             level = 3,
             hasBeenRobbed = false,
             zoneId = nil,
-            requiredHack = 'circle_progress',
+            requiredHack = chosenHack,
         }
     end
 end)
