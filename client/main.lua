@@ -74,7 +74,7 @@ RegisterNetEvent('banks:client:keypad', function(data)
     for k, v in pairs(hackingItems) do
         if v.metadata.attachedSoftware then
             table.insert(hackingDevices, {
-                value = v,
+                value = v.slot,
                 label = "Software: "..v.metadata.attachedSoftware,
             })
         end
