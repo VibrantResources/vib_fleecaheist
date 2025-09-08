@@ -3,7 +3,7 @@ local isAnyBankBeingRobbed = false
 RegisterServerEvent('banks:server:OpenDoor', function(data, mins)
     local player = QBCore.Functions.GetPlayer(source)
 
-    --if exports.ox_inventory:RemoveItem(source, Config.ItemRequirements.VaultHack, 1, data.requiredHack) then
+    if exports.ox_inventory:RemoveItem(source, Config.ItemRequirements.VaultHack, 1, data.requiredHack) then
         TriggerClientEvent('ox_lib:alertDialog', source, {
             header = "Current Security Level: "..bankSecurity[data.bankInfo.label].level,
             content = "The vault will open in about "..Config.Security.DoorOpenDelayInSeconds.." seconds\nYou'll have "..mins.." minute[s] until the vault closes",
@@ -18,7 +18,7 @@ RegisterServerEvent('banks:server:OpenDoor', function(data, mins)
         TriggerClientEvent('banks:client:CreateLockerZones', -1, data)
         TriggerEvent('banks:server:CloseDoor', data, mins)
         bankSecurity[data.bankInfo.label].hasBeenRobbed = true
-    --end
+    end
 end)
 
 RegisterServerEvent('banks:server:OpenVault', function(data, mins) -- Open the vault as a cop
