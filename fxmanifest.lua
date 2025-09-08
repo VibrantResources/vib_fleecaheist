@@ -4,7 +4,7 @@ lua54 'yes'
 
 name 'vib_fleecaheist'
 author 'Vibrant Resources'
-version '1.1.0'
+version '1.1.3'
 repository 'https://github.com/VibrantResources/vib_fleecaheist'
 description 'A small heist simulator targeting Fleeca banks with varying hack requirements and randomised rewards'
 
