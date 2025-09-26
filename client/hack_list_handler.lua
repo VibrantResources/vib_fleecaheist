@@ -1,25 +1,33 @@
 local bl_ui = exports.bl_ui
 
+--[[  
+    Shared hack registry
+    Use RegisterHack("hackName", bl_ui.FunctionName, {"rand1", "rand2", 3})  
+    - "rand1" and "rand2" will automatically be replaced with random values:
+        rand1 = math.random(3, 5)
+        rand2 = math.random(50, 100)
+    - Any other values are passed as-is.
+--]]
+
+local HacksConfig = {}
+
+function RegisterHack(name, fn, args)
+    HacksConfig[name] = { fn = fn, args = args }
+end
+
+-- Pre-register your hacks here:
+RegisterHack("circle_progress", bl_ui.CircleProgress, {2, 2})
+RegisterHack("normal_progress", bl_ui.Progress, {"rand1", "rand2"})
+RegisterHack("key_spam", bl_ui.KeySpam, {"rand1", "rand2"})
+RegisterHack("key_circle", bl_ui.KeyCircle, {"rand1", "rand2", 3})
+RegisterHack("number_slide", bl_ui.NumberSlide, {"rand1", "rand2", 3})
+RegisterHack("rapid_lines", bl_ui.RapidLines, {"rand1", "rand2", 3})
+RegisterHack("circle_shake", bl_ui.CircleShake, {"rand1", "rand2", 3})
+
+-- Main interaction function
 function InteractWithHackingList(data)
-    local hackInUse = ""
-
-    if data.hackToInstall then
-        hackInUse = data.hackToInstall
-    else
-        hackInUse = data
-    end
-
-    local hacks = {
-        circle_progress = { fn = bl_ui.CircleProgress, args = {2, 2} },
-        normal_progress = { fn = bl_ui.Progress,      args = {"rand1", "rand2"} },
-        key_spam        = { fn = bl_ui.KeySpam,       args = {"rand1", "rand2"} },
-        key_circle      = { fn = bl_ui.KeyCircle,     args = {"rand1", "rand2", 3} },
-        number_slide    = { fn = bl_ui.NumberSlide,   args = {"rand1", "rand2", 3} },
-        rapid_lines     = { fn = bl_ui.RapidLines,    args = {"rand1", "rand2", 3} },
-        circle_shake    = { fn = bl_ui.CircleShake,   args = {"rand1", "rand2", 3} },
-    }
-
-    local chosenHack = hacks[hackInUse]
+    local hackInUse = data.hackToInstall or data
+    local chosenHack = HacksConfig[hackInUse]
     local success = false
 
     if chosenHack then
@@ -54,7 +62,6 @@ function InteractWithHackingList(data)
                 type = 'error'
             })
         end
-
         return false
     end
 end
