@@ -14,7 +14,7 @@ CreateThread(function()
         local chosenHack = Config.HackingDevice.AvailableHackingSoftware[randomHackKey]
 
         bankSecurity[v.label] = {
-            level = 3,
+            level = 0,
             hasBeenRobbed = false,
             zoneId = nil,
             requiredHack = chosenHack,
@@ -32,7 +32,7 @@ RegisterServerEvent('banks:server:UpdateBankSecurity', function(data)
     local player = QBCore.Functions.GetPlayer(source)
 
     if exports.ox_inventory:RemoveItem(source, Config.ItemRequirements.MainframeUpgrade, 1) then
-        bankSecurity[data].level = bankSecurity[data].level + 1
+        bankSecurity[data].level = (bankSecurity[data].level + 1)
         lib.notify(source, {
             title = 'Attention',
             description = 'You upgraded the security level of this vault',

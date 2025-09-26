@@ -15,7 +15,6 @@ Config.ItemRequirements = {
 -- All banks start on Security Level 0 and utlise the [DefaultDurationInMinutes] until they are upgraded beyond that
 -- You can add as many levels as you want to this list, just keep following the current format
 Config.Security = {
-    MaximumLevel = 5,
     DefaultDurationInMinutes = 15,
     DoorOpenDelayInSeconds = 1,
     Levels = {
@@ -23,22 +22,22 @@ Config.Security = {
             doorOpenDurationInMinutes = 15,
         },
         [2] = {
-            doorOpenDurationInMinutes = 13,
+            doorOpenDurationInMinutes = 14,
         },
         [3] = {
-            doorOpenDurationInMinutes = 11,
+            doorOpenDurationInMinutes = 13,
         },
         [4] = {
-            doorOpenDurationInMinutes = 9,
+            doorOpenDurationInMinutes = 8,
         },
         [5] = {
             doorOpenDurationInMinutes = 7,
         },
         [6] = {
-            doorOpenDurationInMinutes = 5,
+            doorOpenDurationInMinutes = 6,
         },
         [7] = {
-            doorOpenDurationInMinutes = 3,
+            doorOpenDurationInMinutes = 5,
         },
     },
 }

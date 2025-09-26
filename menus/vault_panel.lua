@@ -7,7 +7,7 @@ RegisterNetEvent('banks:client:PanelMenu', function(data)
     local headerMenu = {}
 
     if CheckPlayerJobAndType(playerJob) then
-        if bankSecurity.level >= Config.Security.MaximumLevel then
+        if bankSecurity.level >= #Config.Security.Levels then
             headerMenu[#headerMenu + 1] = {
                 title = "Security Rating",
                 description = "This banks security level can't get any higher, it's already level: "..bankSecurity.level,
