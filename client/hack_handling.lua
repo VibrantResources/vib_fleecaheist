@@ -4,46 +4,27 @@ local bl_ui = exports.bl_ui
 -- You can change the value in the exports brackets to make the minigame easier or harder
 
 function AttemptHack(hackSoftware)
-    if hackSoftware == "circle_progress" then
-        local success = bl_ui:CircleProgress(math.random(3, 5), math.random(50, 100))
-        
-        return success
+    local hacks = {
+        circle_progress = { fn = bl_ui.CircleProgress },
+        normal_progress = { fn = bl_ui.Progress },
+        key_spam       = { fn = bl_ui.KeySpam },
+        key_circle     = { fn = bl_ui.KeyCircle, extra = 3 },
+        number_slide   = { fn = bl_ui.NumberSlide, extra = 3 },
+        rapid_lines    = { fn = bl_ui.RapidLines, extra = 3 },
+        circle_shake   = { fn = bl_ui.CircleShake, extra = 3 },
+    }
+
+    local chosenHack = hacks[hackSoftware]
+    if not chosenHack then
+        return false
     end
 
-    if hackSoftware == "normal_progress" then
-        local success = bl_ui:Progress(math.random(3, 5), math.random(50, 100))
-
-        return success
-    end
-
-    if hackSoftware == "key_spam" then
-        local success = bl_ui:KeySpam(math.random(3, 5), math.random(50, 100))
-
-        return success
-    end
-    
-    if hackSoftware == "key_circle" then
-        local success = bl_ui:KeyCircle(math.random(3, 5), math.random(50, 100), 3)
-
-        return success
-    end
-
-    if hackSoftware == "number_slide" then
-        local success = bl_ui:NumberSlide(math.random(3, 5), math.random(50, 100), 3)
-
-        return success
-    end
-
-    if hackSoftware == "rapid_lines" then
-        local success = bl_ui:RapidLines(math.random(3, 5), math.random(50, 100), 3)
-
-        return success
-    end
-
-    if hackSoftware == "circle_shake" then
-        local success = bl_ui:CircleShake(math.random(3, 5), math.random(50, 100), 3)
-
-        return success
+    local option1 = math.random(3, 5)
+    local option2 = math.random(50, 100)
+    if chosenHack.extra then
+        return chosenHack.fn(bl_ui, option1, option2, chosenHack.extra)
+    else
+        return chosenHack.fn(bl_ui, option1, option2)
     end
 end
 
