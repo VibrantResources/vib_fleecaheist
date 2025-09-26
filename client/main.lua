@@ -128,7 +128,7 @@ RegisterNetEvent('banks:client:keypad', function(data)
     local timeLeft = 0
     
     if copCount >= Config.CoreInfo.Cops then
-        if AttemptHack(hackSoftware) ~= false then
+        if InteractWithHackingList(hackSoftware) ~= false then
             if data.security.level == 0 then
                 timeLeft = Config.Security.DefaultDurationInMinutes
             else
@@ -154,18 +154,34 @@ RegisterNetEvent('banks:client:keypad', function(data)
     end
 end)
 
-function CheckPlayerJobAndType(playerJob)
-    if playerJob.type == Config.PoliceInformation.PoliceJob.JobType then
+RegisterNetEvent('banks:client:AttachHackingDevice', function(data)
+    local player = cache.ped
 
-        return true
-    end
-
-    for k, v in pairs(Config.PoliceInformation.PoliceJob.JobNames) do
-        if v == playerJob.name then
-
-            return true
+    if lib.progressCircle({
+        duration = 1000,
+        label = "Linking in device",
+        useWhileDead = false,
+        canCancel = true,
+        disable = {
+            car = true,
+            move = true,
+            combat = true,
+        },
+        anim = {
+            dict = 'anim@heists@fleeca_bank@drilling',
+            clip = 'drill_straight_idle'
+        },
+    }) then 
+        if not data.deletingSoftware then
+            InteractWithHackingList(data)
+        else
+            TriggerServerEvent('banks:server:RemoveDataFromDevice', data)
         end
+    else
+        lib.notify({
+            title = 'Canceled',
+            description = 'Canceled',
+            type = 'error'
+        })
     end
-
-    return false
-end
+end)
