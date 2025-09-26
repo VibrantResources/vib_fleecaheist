@@ -1,8 +1,8 @@
 local bl_ui = exports.bl_ui
 
 --[[  
-    Shared hack registry
-    Use RegisterHack("hackName", bl_ui.FunctionName, {"rand1", "rand2", 3})  
+    Registering a new bl_ui hack
+    Use RegisterHack("hackName", bl_ui.NameOfHack, {"rand1", "rand2", 3})  
     - "rand1" and "rand2" will automatically be replaced with random values:
         rand1 = math.random(3, 5)
         rand2 = math.random(50, 100)
