@@ -12,6 +12,18 @@ RegisterNetEvent('banks:client:LootBoxDrillMiniGame', function(data)
     local player = cache.ped
     local playerCoords = GetEntityCoords(player)
     local lootbox = data.args.lootBoxIndex
+    local canBoxBeRobbed = lib.callback.await('banks:server:CheckLootBox', false, lootbox)
+
+    if not canBoxBeRobbed then
+        lib.notify({
+            title = 'Unable',
+            description = "This box has already been emptied",
+            type = 'error'
+        })
+
+        return
+    end
+    
     local fullBankInfo = data.args.fullBankInfo
     local bankInfo = data.args.bankInfo
     local drillItem = exports.ox_inventory:Search('count', Config.ItemRequirements.LockerDrill)
@@ -70,6 +82,18 @@ end)
 
 RegisterNetEvent('banks:client:LootBoxProgressBar', function(data)
     local lootbox = data.args.lootBoxIndex
+    local canBoxBeRobbed = lib.callback.await('banks:server:CheckLootBox', false, lootbox)
+
+    if not canBoxBeRobbed then
+        lib.notify({
+            title = 'Unable',
+            description = "This box has already been emptied",
+            type = 'error'
+        })
+
+        return
+    end
+
     local fullBankInfo = data.args.fullBankInfo
     local bankInfo = data.args.bankInfo
     local drillItem = exports.ox_inventory:Search('count', Config.ItemRequirements.LockerDrill)

@@ -20,6 +20,20 @@ lib.callback.register('banks:server:CheckBankRobberyState', function()
     return isAnyBankBeingRobbed
 end)
 
+lib.callback.register('banks:server:CheckLootBox', function(source, lootBoxIndex)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then
+        return
+    end
+    
+    if not lockerZones[lootBoxIndex].zoneId then
+        return false
+    end
+
+    return true
+end)
+
 lib.callback.register('banks:server:CheckCopCount', function(source)
     local copCount = 0
     local allPlayers = QBCore.Functions.GetQBPlayers()
