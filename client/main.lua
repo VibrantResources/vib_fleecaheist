@@ -103,7 +103,19 @@ RegisterNetEvent('banks:client:keypad', function(data)
         return
     end
 
-    if hackingInput[1].metadata.attachedSoftware ~= requiredHackSoftware then
+    local foundDevice = lib.callback.await('fleeca:server:FindHackingItem', false, hackingInput[1])
+    if not foundDevice then
+        lib.notify({
+            title = 'Unable',
+            description = "No hacking device was found",
+            type = 'error'
+        })
+
+        return
+    end
+
+    local hackSoftware = foundDevice.metadata.attachedSoftware
+    if hackSoftware ~= requiredHackSoftware then
         lib.notify({
             title = 'Unable',
             description = "That software won't bypass this security panel!",
@@ -116,7 +128,7 @@ RegisterNetEvent('banks:client:keypad', function(data)
     local timeLeft = 0
     
     if copCount >= Config.CoreInfo.Cops then
-        if AttemptHack(hackingInput[1]) ~= false then
+        if AttemptHack(hackSoftware) ~= false then
             if data.security.level == 0 then
                 timeLeft = Config.Security.DefaultDurationInMinutes
             else

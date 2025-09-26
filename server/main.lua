@@ -17,7 +17,7 @@ CreateThread(function()
             level = 3,
             hasBeenRobbed = false,
             zoneId = nil,
-            requiredHack = chosenHack,
+            requiredHack = 'circle_progress',
         }
     end
 end)

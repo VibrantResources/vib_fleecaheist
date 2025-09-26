@@ -3,44 +3,44 @@ local bl_ui = exports.bl_ui
 -- This list is for hacking into a vault panel AFTER the software is already on the hackeritem
 -- You can change the value in the exports brackets to make the minigame easier or harder
 
-function AttemptHack(data)
-    if data.metadata.attachedSoftware == "circle_progress" then
+function AttemptHack(hackSoftware)
+    if hackSoftware == "circle_progress" then
         local success = bl_ui:CircleProgress(math.random(3, 5), math.random(50, 100))
         
         return success
     end
 
-    if data.metadata.attachedSoftware == "normal_progress" then
+    if hackSoftware == "normal_progress" then
         local success = bl_ui:Progress(math.random(3, 5), math.random(50, 100))
 
         return success
     end
 
-    if data.metadata.attachedSoftware == "key_spam" then
+    if hackSoftware == "key_spam" then
         local success = bl_ui:KeySpam(math.random(3, 5), math.random(50, 100))
 
         return success
     end
     
-    if data.metadata.attachedSoftware == "key_circle" then
+    if hackSoftware == "key_circle" then
         local success = bl_ui:KeyCircle(math.random(3, 5), math.random(50, 100), 3)
 
         return success
     end
 
-    if data.metadata.attachedSoftware == "number_slide" then
+    if hackSoftware == "number_slide" then
         local success = bl_ui:NumberSlide(math.random(3, 5), math.random(50, 100), 3)
 
         return success
     end
 
-    if data.metadata.attachedSoftware == "rapid_lines" then
+    if hackSoftware == "rapid_lines" then
         local success = bl_ui:RapidLines(math.random(3, 5), math.random(50, 100), 3)
 
         return success
     end
 
-    if data.metadata.attachedSoftware == "circle_shake" then
+    if hackSoftware == "circle_shake" then
         local success = bl_ui:CircleShake(math.random(3, 5), math.random(50, 100), 3)
 
         return success

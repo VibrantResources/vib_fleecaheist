@@ -32,3 +32,13 @@ lib.callback.register('banks:server:CheckCopCount', function(source)
     
     return copCount
 end)
+
+lib.callback.register('fleeca:server:FindHackingItem', function(source, slotNumber)
+    local player = QBCore.Functions.GetPlayer(source)
+
+    if not player then
+        return
+    end
+
+    return exports.ox_inventory:GetSlot(source, slotNumber)
+end)
